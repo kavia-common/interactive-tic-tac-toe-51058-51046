@@ -1,104 +1,124 @@
-/* CSS Variables for Theme Management */
+/* Minimalistic Tic Tac Toe app theme */
+/* Color palette: primary #1976d2, accent #ff4081, secondary #eeeeee */
+
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  --color-primary: #1976d2;
+  --color-accent: #ff4081;
+  --color-secondary: #eeeeee;
+  --ttt-bg: #fff;
+  --ttt-border: #e0e0e0;
+  --ttt-btn: #1976d2;
 }
 
-[data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
-}
-
-.App {
-  text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+body {
+  background: var(--color-secondary);
+  margin: 0;
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: var(--bg-secondary);
+.tictactoe-app {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: var(--color-secondary);
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
+}
+
+/* Current player, winner, draw text */
+.ttt-status {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+  color: #222;
+  min-height: 2.5em;
+  letter-spacing: .5px;
+}
+
+.player-x {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.player-o {
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+.ttt-board {
+  display: grid;
+  grid-template-columns: repeat(3, 64px);
+  grid-template-rows: repeat(3, 64px);
+  gap: 8px;
+  background: var(--ttt-bg);
+  padding: 20px;
+  border-radius: 20px;
+  border: 2px solid var(--ttt-border);
+  box-shadow: 0 4px 18px 0 rgba(25, 118, 210, 0.06);
+  margin-bottom: 2rem;
+  transition: box-shadow 0.22s;
+}
+
+.ttt-cell {
+  width: 64px;
+  height: 64px;
+  background: var(--color-secondary);
+  border: 2px solid var(--ttt-border);
+  border-radius: 14px;
+  font-size: 2rem;
+  color: var(--color-primary);
+  outline: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: border 0.18s, box-shadow 0.15s;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
-  position: relative;
+  box-sizing: border-box;
+  user-select: none;
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
+.ttt-cell:hover:not(:disabled):not(.ttt-cell-won) {
+  border: 2px solid var(--color-primary);
+  background: #f2f6fc;
 }
 
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
+.ttt-cell:disabled {
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.ttt-restart-btn {
+  margin-top: 0;
+  font-size: 1.12rem;
+  padding: 0.7em 2.2em;
+  background: var(--color-primary);
+  color: #fff;
   border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 600;
+  border-radius: 16px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  box-shadow: 0 2px 8px 0 rgba(25, 118, 210, 0.06);
+  outline: none;
+  transition: background 0.20s, transform 0.13s;
 }
 
-.theme-toggle:hover {
+.ttt-restart-btn:hover, .ttt-restart-btn:focus {
+  background: var(--color-accent);
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+  color: #fff;
 }
 
-.theme-toggle:active {
-  transform: translateY(0);
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@media (max-width: 700px) {
+  .ttt-board {
+    grid-template-columns: repeat(3, 48px);
+    grid-template-rows: repeat(3, 48px);
+    padding: 8px;
   }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
+  .ttt-cell {
+    width: 48px; height: 48px; font-size: 1.45rem;
   }
 }
